@@ -4,6 +4,7 @@
     <div class="box">
       这是1px边框的效果。
     </div>
+    <div w-188-246></div>
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
   name: 'index',
   data(){
     return {
-      
+
     }
   },
   mounted(){
@@ -39,6 +40,13 @@ export default {
     width: 100%;
     height: 300px;
     padding: 10px;
+  }
+  [w-188-246] {
+    width: 188px;
+    background-color: red;
+  }
+  [w-188-246] {
+    aspect-ratio: '188:246';
   }
 </style>
 

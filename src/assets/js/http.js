@@ -49,7 +49,7 @@ instance.interceptors.response.use(function (response) {
   error.config.params.timestamp && vm.$store.commit('setHttpsNumber',vm.$store.state.httpsNumber - 1)
   vm.$store.state.httpsNumber === 0 && vm.$loading.remove();
   if(error.message === 'Network Error'){
-    vm.$notify({ type: 'warning', message: localStorage.languageKey === 'zh-HK' ? '當前網絡訊號弱，請移步至訊號良好區域！' : '当前网络信号弱,请移步至信号良好区域!' });
+    vm.$notify({ type: 'warning', message: '当前网络信号弱,请移步至信号良好区域!' });
     return error
   }else{
     return Promise.reject(error);

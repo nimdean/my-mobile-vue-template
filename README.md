@@ -111,6 +111,9 @@ proxy: {
 }
 ```
 
+## 容器宽高比
+项目中，在某些场景中，一些`div`必须保证固定的宽高比例来满足排版需求。
+
 ## IOS特有的兼容性处理
 1. `overflow-y:auto`滚动卡顿的解决方案
   因`IOS`用的是专属的滚动盒子，所以但凡是设置了`overflow-y:auto`样式的地方都需要加上`-webkit-overflow-scrolling: touch`才能流畅滚动。
