@@ -3,14 +3,19 @@
     <div class="scroll-board" ref="board">
       <slot></slot>
     </div>
-    <van-loading size="20px" class="loading" color="#2F93EE" v-show="isRefreshing">{{$t('loading')}}</van-loading>
-    <div class="is-no-more" v-show="isNoMore">{{$t('no-more')}}</div>
+    <no-data v-show="!total"></no-data>
+    <van-loading size="20px" class="loading" color="#2F93EE" v-show="isRefreshing">{{tips.loading}}</van-loading>
+    <div class="is-no-more" v-show="isNoMore">{{tips.noMore}}</div>
   </div>
 </template>
 
 <script>
+import noData from './noData'
 export default {
   name: "lazy-refresh",
+  components: {
+    noData
+  },
   i18n: {
     messages: {
       'zh-CN': {
@@ -20,6 +25,10 @@ export default {
       'zh-HK': {
         'loading': '加載中...',
         'no-more': '没有更多了',
+      },
+      'en-us': {
+        'loading': 'loading...',
+        'no-more': 'No more',
       }
     }
   },
@@ -75,6 +84,17 @@ export default {
     },
     isRefreshing(newVal){
       this.$emit('input', newVal)
+    }
+  },
+  computed: {
+    tips(){
+      return this.$t ? {
+        'loading': this.$t('loading'),
+        'noMore': this.$t('no-more')
+      } : {
+        'loading': '加载中...',
+        'noMore': '没有更多了'
+      }
     }
   }
 };

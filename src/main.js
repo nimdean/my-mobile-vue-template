@@ -48,11 +48,11 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
  */
 router.beforeEach((to, from, next) => {
   // 企业微信小应用登录
-  let urlSplit = window.location.href.split("?");
-  if(urlSplit.length > 1 && urlSplit[1].indexOf("code=") > -1 && urlSplit[1].indexOf("state=") > -1){
-    let queryArr = urlSplit[1].split("#/")[0].split("&");
-    let code = queryArr.find(item => item.indexOf("code=") > -1).split("=")[1];
-    let state = queryArr.find(item => item.indexOf("state=") > -1).split("=")[1];
+  let urlSplit = window.location.href.split("?")
+  if(urlSplit.length > 1 && urlSplit[1].indexOf("code=") > -1 && urlSplit[1].indexOf("state=") > -1 && !sessionStorage.sessionId){
+    let queryArr = urlSplit[1].split("#/")[0].split("&")
+    let code = queryArr.find(item => item.indexOf("code=") > -1).split("=")[1]
+    let state = queryArr.find(item => item.indexOf("state=") > -1).split("=")[1]
     axios({ // 获取登录信息
       method: 'post',
       url: `${process.env.VUE_APP_BASEURL || ''}/api/entwechat/callback/qywxGetUserIdByCode`,

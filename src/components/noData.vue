@@ -1,7 +1,7 @@
 <template>
   <div class="no-data">
     <img :src="require('@/assets/images/noData.png')" />
-    <p>{{$t("no-data-info")}}</p>
+    <p>{{tip}}</p>
   </div>
 </template>
 
@@ -15,7 +15,15 @@ export default {
       },
       'zh-HK': {
         'no-data-info': '沒有相關資料哦'
+      },
+      'en-US': {
+        'no-data-info': 'No relevant data'
       }
+    }
+  },
+  computed: {
+    tip(){
+      return this.$t ? this.$t('no-data-info') : '没有相关数据哦'
     }
   }
 }
@@ -25,15 +33,15 @@ export default {
   .no-data{
     text-align: center;
     background: #fff;
-    padding: 150px 0;
+    padding: 80px 0;
     width: 710px;
     img{
       width: 100%;
-      // margin-bottom: 20px;
     }
     p{
       color: #999;
       font-size: 26px;
+      line-height: 50px;
     }
   }
 </style>
