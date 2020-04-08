@@ -11,6 +11,9 @@ if(process.env.VUE_APP_ENV === 'uat'){
   let vConsole = require('vconsole')
   new vConsole()
 }
+if(process.env.NODE_ENV === 'development'){ // 区分环境，这样即使打包时忘了把下面代码注释掉也不会影响生产环境
+  require('./mock/index.js') // 开发环境不需要开启mock时注释
+}
 
 import {
   Button,

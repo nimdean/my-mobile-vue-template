@@ -18,7 +18,7 @@ export default {
   },
   mounted(){
     this.$store.dispatch('getWeatherInfo','101280601').then(rs => {
-      console.log("深圳天气信息",rs.data)
+      console.log("深圳天气信息",rs)
     })
   }
 }
