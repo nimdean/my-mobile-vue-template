@@ -4,13 +4,16 @@ import { router } from './router'
 import store from './store'
 import noData from '@/components/noData'
 import lazyRefresh from '@/components/lazyRefresh'
+import time from '@/utils/'
 import axios from 'axios'
 import qs from 'qs'
 import '@/assets/style/common.less'
+
 if(process.env.VUE_APP_ENV === 'uat'){
   let vConsole = require('vconsole')
   new vConsole()
 }
+
 if(process.env.NODE_ENV === 'development'){ // 区分环境，这样即使打包时忘了把下面代码注释掉也不会影响生产环境
   require('./mock/index.js') // 开发环境不需要开启mock时注释
 }
@@ -23,6 +26,7 @@ import {
 } from 'vant';
 
 import loadingMask from '@/components/loading'
+
 Vue.config.productionTip = false
 Vue.prototype.$dialog = Dialog
 Vue.prototype.$notify = Notify
@@ -33,6 +37,7 @@ Vue.use(loadingMask)
 Vue.use(Dialog)
 Vue.component('no-data', noData)
 Vue.component('lazy-refresh', lazyRefresh)
+Vue.use(time)
 
 if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境添加模拟登录者信息
   let userInfo = {
@@ -42,13 +47,15 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
     "avatar":"https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0"
   }
   for(let i in userInfo){
+    if(i === 'sessionId'){
+      setTimeout(() => {
+        store.commit('setSessionId', userInfo[i])
+      },1000)
+    }
     sessionStorage[i] = userInfo[i]
   }
 }
 
-/**
- * 
- */
 router.beforeEach((to, from, next) => {
   // 企业微信小应用登录
   let urlSplit = window.location.href.split("?")
@@ -64,6 +71,9 @@ router.beforeEach((to, from, next) => {
       if(rs.status === 200){
         if(rs.data.result === 'success'){
           for(let i in rs.data.data){
+            if(i === 'sessionId'){
+              store.commit('setSessionId', rs.data.data[i])
+            }
             sessionStorage[i] = rs.data.data[i]
           }
           next()

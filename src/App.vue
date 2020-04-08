@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div class="login-mask" v-if="!$store.state.sessionId">
+      <van-loading type="spinner" color="#1989fa" size="24px">登录中...</van-loading>
+    </div>
+    <router-view v-else />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
 }
 </script>
 
@@ -22,5 +25,12 @@ export default {
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  .login-mask{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
 </style>

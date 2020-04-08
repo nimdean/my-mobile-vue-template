@@ -123,3 +123,13 @@ proxy: {
 ## IOS特有的兼容性处理
 1. `overflow-y:auto`滚动卡顿的解决方案
   因`IOS`用的是专属的滚动盒子，所以但凡是设置了`overflow-y:auto`样式的地方都需要加上`-webkit-overflow-scrolling: touch`才能流畅滚动。
+
+## Eslint
+
+**一般情况下不需要对`eslint`做出调整！！！**
+ESLint 是一个ECMAScript/JavaScript 语法规则和代码风格的检查工具，它的目标是保证代码的一致性和避免错误。[ESlint 中文官方网站](http://eslint.cn/)中列出了详细的配置规则，此框架eslint规则的配置在`package.jso`文件中。
+
+
+## 全局方法、过滤器等
+
+项目开发过程总是会需要一些全局方法或者全局过滤器之类的，项目中已经安装了一个插件，位置在`@/utils/index.js`，可以在此文件中添加全局方法、全局过滤器等，`main.js`中已经做了安装处理，添加完后按使用即可。如果对如何添加全局方法、全局过滤器有疑问，参照[Vue官方文档](https://cn.vuejs.org/v2/guide/plugins.html#%E5%BC%80%E5%8F%91%E6%8F%92%E4%BB%B6)
