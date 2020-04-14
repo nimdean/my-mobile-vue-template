@@ -79,8 +79,9 @@ export default {
   },
   watch: {
     value(newVal){
-      if(newVal !== this.isRefreshing) this.isRefreshing = newVal
-      console.log(newVal)
+      if(newVal !== this.isRefreshing){
+        this.isRefreshing = newVal
+      }
     },
     isRefreshing(newVal){
       this.$emit('input', newVal)
