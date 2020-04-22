@@ -1,5 +1,5 @@
 let MyPlugin = {
-  install: (Vue, options) => {
+  install: (Vue) => {
     Vue.prototype.$formatTime = (time, format = 'YYYY-MM-DD') => { // 日期格式化函数
       let tempDate = new Date(time)
       if(tempDate.toString() === 'Invalid Date'){ // 非法值不做转换
@@ -36,6 +36,8 @@ let MyPlugin = {
         return `${month}-${day}`
       }else if(format.toUpperCase() === 'MM/DD'){
         return `${month}/${day}`
+      }else if(format.toUpperCase() === 'HH:MM:SS'){
+        return `${hours}:${minutes}:${seconds}`
       }else{
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
       }
