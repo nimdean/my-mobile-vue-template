@@ -15,15 +15,14 @@ if(process.env.VUE_APP_ENV === 'uat'){
 }
 
 if(process.env.NODE_ENV === 'development'){ // 区分环境，这样即使打包时忘了把下面代码注释掉也不会影响生产环境
-  require('./mock/index.js') // 开发环境不需要开启mock时注释
+  // require('./mock/index.js') // 开发环境不需要开启mock时注释
 }
 
 import {
-  Button,
   Loading,
   Dialog,
   Notify,
-} from 'vant';
+} from 'vant'
 
 import loadingMask from '@/components/loading'
 
@@ -31,7 +30,6 @@ Vue.config.productionTip = false
 Vue.prototype.$dialog = Dialog
 Vue.prototype.$notify = Notify
 
-Vue.use(Button)
 Vue.use(Loading)
 Vue.use(loadingMask)
 Vue.use(Dialog)
@@ -43,7 +41,7 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
   let userInfo = {
     "orgname":"船務部",
     "name":"周佩儀",
-    "sessionId": "c537ec13-a170-4227-95f4-c56f17244162",
+    "sessionId": "45679564-f094-444c-b775-6491f13ec3d6",
     "avatar":"https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0"
   }
   for(let i in userInfo){
@@ -88,7 +86,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
 
 const vm = new Vue({
   router,

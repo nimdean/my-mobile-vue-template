@@ -10,12 +10,17 @@
 <script>
 export default {
   name: 'app',
+  created(){
+    if(sessionStorage.sessionId){
+      this.$store.commit('setSessionId', sessionStorage.sessionId)
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
 #app {
-  font-family: 'PingFang SC', 'Helvetica Neue', "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Avenir', 'Helvetica', 'Arial', 'sans-serif', 'Source Han Sans CN';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
