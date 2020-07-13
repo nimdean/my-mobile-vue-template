@@ -1,5 +1,9 @@
-import axios from 'axios';
-import vm from '../../main.js';
+import axios from 'axios'; // 文件下载专用
+import {
+  Toast,
+} from 'vant'
+
+import Loading from './loading'
 
 let options = {
   baseURL: process.env.NODE_ENV === 'development' ? '' : process.env.VUE_APP_BASEURL,
@@ -13,15 +17,14 @@ instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   config.params || (config.params = {})
   if(config.data && config.data.hasOwnProperty('needRemoveMask')){
-    if(!config.data.needRemoveMask) vm.$loading.show();
+    if(!config.data.needRemoveMask) Loading.show();
     config.data = config.data.data
     // 无遮罩层的请求添加一个名为temptime的时间戳
     config.params.temptime = new Date().getTime()
   }else{
     // 有遮罩层的请求添加一个名为timestamp的时间戳
     config.params.timestamp = new Date().getTime()
-    vm.$store.commit('setHttpsNumber',vm.$store.state.httpsNumber + 1)
-    vm.$loading.show();
+    Loading.show();
   }
   // 请求头里添加sessionId
   if(sessionStorage.sessionId){
@@ -37,23 +40,24 @@ instance.interceptors.request.use(function (config) {
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  response.config.params.timestamp && vm.$store.commit('setHttpsNumber',vm.$store.state.httpsNumber - 1)
-  vm.$store.state.httpsNumber === 0 && vm.$loading.remove();
+  response.config.params.timestamp && Loading.hide()
   if(response.status === 200) {
-    response.data.result && response.data.result === 'fail' && vm.$notify({ type: 'warning', message: response.data.msg });
+    if(response.data.result !== 'success'){
+      Toast.fail(response.data.msg || response.data.data)
+    }
     return response.data;
   }
+  Toast.fail(response.data.data || response.data.msg)
   return response;
 }, function (error) {
   // 对响应错误做点什么
-  error.config.params.timestamp && vm.$store.commit('setHttpsNumber',vm.$store.state.httpsNumber - 1)
-  vm.$store.state.httpsNumber === 0 && vm.$loading.remove();
+  error.config.params.timestamp && Loading.hide()
+  Toast.fail(error.message)
   if(error.message === 'Network Error'){
-    vm.$notify({ type: 'warning', message: '当前网络信号弱,请移步至信号良好区域!' });
     return error
   }else{
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
 });
 
-export default instance;
+export default instance

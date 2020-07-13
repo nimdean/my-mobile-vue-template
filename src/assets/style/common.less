@@ -1,27 +1,422 @@
-// 确认弹窗自定义样式
-.confirm-dialog-diy{
+// 请求遮罩层样式
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.load-effect {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.load-effect span {
+  display: inline-block;
+  width: 15px;
+  height: 4px;
+  background: #1989fa;
+  transform-origin: -15px 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-radius: 2px;
+  animation: load 1.56s ease infinite;
+}
+
+@keyframes load {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+// ehr-form的通用样式设置
+.ehr-form {
+  text-align: left;
+  background: #fff;
+  padding: 0 30px;
+
+  .picker-input-editable {
+    input {
+      color: #222 !important;
+    }
+  }
+
+  .picker-input-readonly {
+    input {
+      color: #B2BBCE;
+    }
+  }
+
+  .van-cell {
+    &:not(:last-child):after {
+      border-bottom: 0;
+    }
+
+    &.long-field {
+      display: inline-block;
+
+      .van-field__control {
+        text-align: left;
+        justify-content: flex-start;
+      }
+
+      .van-radio-group--horizontal {
+        margin-top: 4px;
+
+        .van-radio--horizontal {
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    &.van-field {
+      padding: 4vw 0;
+
+      &.van-cell {
+        padding-left: 2vw;
+      }
+
+      &.van-cell--required {
+        &:before {
+          content: '*' !important;
+          font-size: 3.733vw;
+          color: #C8151E;
+          left: 0;
+        }
+      }
+
+      .van-field__label {
+        color: #667080;
+        font-size: 3.733vw;
+        width: auto;
+
+        .file-name {
+          color: #2F93EE;
+
+          .close-file-icon {
+            vertical-align: middle;
+          }
+        }
+
+        .label-upload {
+          margin-right: 4vw;
+        }
+
+        .upload-button {
+          button {
+            width: 18.667vw;
+            height: 5.867vw;
+            border: 1px solid #2F93EE;
+            color: #2F93EE;
+            font-size: 3.2vw;
+            vertical-align: middle;
+          }
+        }
+      }
+
+      .van-field__value {
+        .van-field__word-limit {
+          color: #B2BBCE;
+        }
+
+        .van-field__body {
+          .know-somebody {
+            width: 22.933vw;
+            height: 6.667vw;
+            margin-left: 3.333vw;
+            border: 1px solid #DBDFEC;
+            border-radius: 0.533;
+            padding: 0 1vw;
+            background: #F5F6F9;
+            border-radius: 4px;
+
+            &::-webkit-input-placeholder {
+              color: #B2BBCE;
+              font-size: 3.733vw;
+            }
+          }
+
+          input,
+          textarea {
+            font-size: 3.733vw;
+            color: #222;
+
+            &::-webkit-input-placeholder {
+              color: #B2BBCE;
+              font-size: 3.733vw;
+            }
+
+            &[readonly="readonly"] {
+              color: #B2BBCE;
+            }
+          }
+
+          .van-field__right-icon {
+            color: #B2BBCE;
+            font-size: 3.733vw;
+          }
+
+          .van-radio-group,
+          .van-checkbox-group {
+            color: #333;
+            font-size: 3.733vw;
+
+            &.big-margin {
+
+              .van-radio:not(:last-child),
+              .van-checkox:not(:last-child) {
+                margin-right: 14.933vw;
+              }
+
+              .van-radio:last-child,
+              .van-checkox:last-child {
+                margin-right: 0;
+              }
+            }
+
+            .van-radio__icon,
+            .van-checkbox__icon {
+              line-height: 3.733vw;
+              height: 3.733vw;
+
+              &.van-radio__icon--checked,
+              &.van-checkbox_icon--checked {
+                .van-icon {
+                  background-color: #2F93EE;
+                  border-color: #2F93EE;
+                }
+              }
+
+              .van-icon {
+                font-size: 3vw;
+                width: 3.733vw;
+                height: 3.733vw;
+              }
+            }
+
+            .van-checkbox__icon {
+              .van-icon {
+                border-radius: 2px;
+              }
+            }
+
+            .van-radio__label,
+            .van-checkbox__label {
+              margin-left: 1.867vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 添加按钮的样式
+.ehr-add-button {
+  width: 100%;
+  height: 88px;
+  border: none;
+  background-color: none;
+  color: #2F93EE;
+  font-size: 28px;
+}
+
+// 大型info按钮样式
+.ehr-large-button {
+  width: 690px;
+  height: 88px;
+  background-color: #2F93EE;
+  font-size: 32px;
+  color: #fff;
+  margin: 20px 30px;
   border-radius: 8px;
-  width: 540px;
-  .van-dialog__header{
-    padding-top: 20px;
-    font-weight: bold;
+}
+
+// 通用表单标题样式
+.ehr-form-header {
+  height: 70px;
+  background-color: #F5F6F9;
+  font-size: 24px;
+  line-height: 70px;
+  color: #999;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .right-icon {
+    width: 32px;
+    height: 32px;
   }
-  .van-dialog__message{
-    padding: 26px 20px 40px 20px;
+
+  .right-text {
+    color: #2F93EE;
+  }
+}
+
+// 通用弹窗样式
+.ehr-common-dialog {
+  width: 658px;
+  border-radius: 14px;
+
+  textarea {
+    width: 510px;
+    border: 1px solid rgba(221, 226, 238, 1);
+    height: 176px;
+    padding: 27px 38px;
+    border-radius: 8px;
+    margin: 0 35px;
+    font-size: 26px;
+    background: rgba(245, 246, 249, 1);
+    color: #666;
+
+    &::-webkit-input-placeholder {
+      color: #B2BBCE;
+      font-size: 26px;
+    }
+  }
+
+  .title {
+    display: relative;
+    font-size: 32px;
     color: #333;
+
+    img {
+      width: 26px;
+      position: absolute;
+      right: 30px;
+      top: 35px;
+    }
   }
-  .van-dialog__cancel{
-    color: rgb(31, 18, 18);
-    font-size: 14px;
-    border-top: 2px #f0f0f0 solid;
-    height: 46px;
-    line-height: 100%;
+
+  .van-dialog__header {
+    padding: 0;
+    height: 15.333vw;
+    margin-bottom: 0.533vw;
+    line-height: 15.333vw;
+    color: #333;
+    font-size: 4.267vw;
+    font-weight: normal;
   }
-  .van-dialog__confirm{
-    background: #4B78B0;
-    font-size: 14px;
-    color: #fff;
-    height: 46px;
-    line-height: 100%;
+
+  .van-dialog__footer--buttons {
+    display: block;
+    padding: 7.33vw 0 6.13vw 0;
+    text-align: center;
+
+    button {
+      width: 35.2vw;
+      height: 11.47vw;
+      border-radius: 1.07vw;
+      line-height: 11.47vw;
+      font-size: 3.73vw;
+
+      &.van-dialog__cancel {
+        border: 1px solid rgba(219, 223, 236, 1);
+        background: #fff;
+        color: #667580;
+        margin-right: 4.67vw;
+      }
+
+      &.van-dialog__confirm {
+        background: #0097FF;
+        border: 1px solid #0097FF;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// 通用确认弹窗样式
+.common-confirm-dialog {
+  border-radius: 14px;
+  width: 512px;
+
+  /deep/ .van-dialog__header {
+    padding: 0;
+  }
+
+  /deep/ .van-dialog__footer--buttons {
+    /* height: 14.4vw; */
+    .van-button {
+      color: #0097FF;
+      font-size: 3.733vw;
+    }
+  }
+
+  .title {
+    padding: 39px 30px 15px 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #B2BBCE;
+    font-size: 28px;
+  }
+
+  .body {
+    padding: 20px 0 10px 0;
+    margin: 0 24px;
+
+    &.termination-body {
+      text-align: center;
+      font-size: 34px;
+      color: #333;
+      line-height: 48px;
+      padding-top: 10px;
+      padding-bottom: 40px;
+    }
+
+    .unit-handle {
+      padding: 20px 22px 20px 22px;
+
+      .name {
+        font-size: 32px;
+        color: #333;
+        line-height: 45px;
+      }
+
+      .label {
+        font-size: 24px;
+        color: #667080;
+        line-height: 33px;
+        padding-top: 3px;
+      }
+    }
+  }
+}
+
+// 自定义暂无数据的样式
+.diy-no-data{
+  height: 100%;
+  text-align: center;
+  img{
+    width: 300px;
+    height: 238px;
+    margin-top: 234px;
+  }
+  p{
+    font-size: 26px;
+    line-height: 37px;
+    margin: 30px 0;
+    color: #667080;
+    .query{
+      color: #2F93EE;
+    }
+  }
+  .increast-contract-button{
+    padding: 0 29px;
   }
 }
