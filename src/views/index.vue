@@ -2,6 +2,7 @@
   <div class="index">
     打开控制台查看<span style="color:red">console</span>的深圳天气信息。
     <div class="box">
+      <div class="box2"></div>
       这是1px边框的效果。
     </div>
     <div w-188-246></div>
@@ -35,8 +36,9 @@ export default {
     }
   }
   .box{
-    border-top: 1px solid transparent;
-    border-image: svg(1px-border param(--color #000)) 2 2 stretch;
+    margin-top: 50px;
+    border-top: 1px solid #cfcfcf;
+    border-image: svg(1px-border param(--color #cfcfcf)) 2 2 stretch;
     width: 100%;
     height: 300px;
     padding: 10px;
@@ -54,6 +56,12 @@ export default {
   .index{
     padding: 20px;
     text-align: left;
+    .box2{
+      width: 100%;
+      height: 120px;
+      border-radius: 5px;
+      border: 1px solid #cfcfcf;
+    }
   }
 </style>
 

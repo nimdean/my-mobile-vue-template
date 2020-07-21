@@ -1,4 +1,4 @@
-let MyPlugin = {
+export const formatTime = {
   install: (Vue) => {
     Vue.prototype.$formatTime = (time, format = 'YYYY-MM-DD') => { // 日期格式化函数
       if(!time) return
@@ -79,5 +79,3 @@ export const deepClone = (data) => { // 简单的深拷贝方法
     return data
   }
 }
-
-export default MyPlugin

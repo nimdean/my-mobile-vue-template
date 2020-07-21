@@ -4,7 +4,7 @@ import { router } from './router'
 import store from './store'
 import noData from '@/components/noData'
 import lazyRefresh from '@/components/lazyRefresh'
-import time from '@/utils/'
+import { formatTime } from '@/utils/'
 import axios from 'axios'
 import qs from 'qs'
 import '@/assets/style/common.less'
@@ -35,7 +35,7 @@ Vue.use(loadingMask)
 Vue.use(Dialog)
 Vue.component('no-data', noData)
 Vue.component('lazy-refresh', lazyRefresh)
-Vue.use(time)
+Vue.use(formatTime)
 
 if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境添加模拟登录者信息
   let userInfo = {

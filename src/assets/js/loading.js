@@ -8,7 +8,7 @@ export default { // 创建loading组件
     load.setAttribute('class', 'load-effect')
     for(let i = 0;i < 12;i ++){
       const Span = document.createElement('span')
-      Span.style.transform = 'translate(25px, -50%) rotate(' + i*30 + 'deg)'
+      Span.style.transform = 'translate(0, -50%) rotate(' + i*30 + 'deg)'
       Span.style['-webkit-animation-delay'] = 0.13*(i + 2) + 's'
       load.appendChild(Span)
     }
