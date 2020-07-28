@@ -60,7 +60,7 @@ export default {
       width: 100%;
       height: 120px;
       border-radius: 5px;
-      border: 1px solid #cfcfcf;
+      border: 1px solid @theme-color;
     }
   }
 </style>
