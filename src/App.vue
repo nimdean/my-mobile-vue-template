@@ -51,11 +51,11 @@ export default {
     height: 100%;
     text-align: center;
     background: #fff;
-    font-size: 13px;
-    line-height: 19px;
+    font-size: 26px;
+    line-height: 38px;
     img{
-      width: 150px;
-      margin-top: 150px;
+      width: 300px;
+      margin-top: 300px;
       margin-bottom: 17px;
     }
     p{

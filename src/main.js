@@ -52,7 +52,7 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
     sessionStorage[i] = userInfo[i]
   }
   setTimeout(() => { // 定时器模拟登录时长
-    store.commit('setLoginSuccess', true)
+    store.commit('setLoginSuccess', false)
   },1000)
 }
 
