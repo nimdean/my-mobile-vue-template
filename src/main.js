@@ -22,6 +22,7 @@ import {
   Loading,
   Dialog,
   Notify,
+  Button,
 } from 'vant'
 
 import loadingMask from '@/components/loading'
@@ -36,6 +37,7 @@ Vue.use(Dialog)
 Vue.component('no-data', noData)
 Vue.component('lazy-refresh', lazyRefresh)
 Vue.use(formatTime)
+Vue.use(Button)
 
 if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境添加模拟登录者信息
   let userInfo = {

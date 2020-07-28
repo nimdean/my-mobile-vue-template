@@ -6,6 +6,7 @@
       这是1px边框的效果。
     </div>
     <div w-188-246></div>
+    <van-button type="primary">主要按钮</van-button>
   </div>
 </template>
 
