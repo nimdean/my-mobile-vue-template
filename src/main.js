@@ -57,8 +57,10 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
 }
 
 router.beforeEach((to, from, next) => {
+  // 动态设置标题
+  if(to.meta.title) document.title = to.meta.title
   // 企业微信小应用登录
-  let urlSplit = window.location.href.split("?")
+  let urlSplit = window.location.search.split("?")
   if(urlSplit.length > 1 && urlSplit[1].indexOf("code=") > -1 && urlSplit[1].indexOf("state=") > -1 && !sessionStorage.sessionId){
     let queryArr = urlSplit[1].split("#/")[0].split("&")
     let code = queryArr.find(item => item.indexOf("code=") > -1).split("=")[1]
