@@ -7,10 +7,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     sessionId: '',
+    login_success: undefined,
   },
   mutations: {
     setSessionId(state, val) { // 设置sessionId的值
       state.sessionId = val
+    },
+    setLoginSuccess(state,val) { // 设置登录状态是否成功
+      state.login_success = val
     }
   },
   actions: {

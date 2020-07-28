@@ -22,6 +22,7 @@ import {
   Loading,
   Dialog,
   Notify,
+  Toast,
   Button,
 } from 'vant'
 
@@ -37,6 +38,7 @@ Vue.use(Dialog)
 Vue.component('no-data', noData)
 Vue.component('lazy-refresh', lazyRefresh)
 Vue.use(formatTime)
+Vue.use(Toast)
 Vue.use(Button)
 
 if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境添加模拟登录者信息
@@ -47,13 +49,11 @@ if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境
     "avatar":"https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0"
   }
   for(let i in userInfo){
-    if(i === 'sessionId'){
-      setTimeout(() => {
-        store.commit('setSessionId', userInfo[i])
-      },1000)
-    }
     sessionStorage[i] = userInfo[i]
   }
+  setTimeout(() => { // 定时器模拟登录时长
+    store.commit('setLoginSuccess', true)
+  },1000)
 }
 
 router.beforeEach((to, from, next) => {
@@ -70,26 +70,26 @@ router.beforeEach((to, from, next) => {
     }).then(rs => {
       if(rs.status === 200){
         if(rs.data.result === 'success'){
+          store.commit('setLoginSuccess', true)
           for(let i in rs.data.data){
-            if(i === 'sessionId'){
-              store.commit('setSessionId', rs.data.data[i])
-            }
             sessionStorage[i] = rs.data.data[i]
           }
           next()
         }else{
-          alert('登录失败: ' + rs.data.data)
+          store.commit('setLoginSuccess', false)
+          Toast.fail('登录失败: ' + rs.data.data)
         }
       }
     }).catch(() => {
-      alert('登录失败！')
+      Toast.fail('登录失败！')
+      store.commit('setLoginSuccess', false)
     })
   }else{
     next()
   }
 })
 
-const vm = new Vue({
+new Vue({
   router,
   store,
   render: h => h(App)
@@ -102,5 +102,3 @@ const vm = new Vue({
   // 这里加了个类型判断，因为a等元素也会触发blur事件
   ['input', 'textarea'].includes(e.target.localName) && document.body.scrollIntoView(false)
 }, true)
-
-export default vm;
