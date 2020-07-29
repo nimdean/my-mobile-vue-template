@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="login-mask" v-if="$store.state.login_success === undefined">
-      <van-loading type="spinner" color="#1989fa" size="24px">登录中...</van-loading>
+      <van-loading type="spinner" color="#1989fa" class="app-loading">登录中...</van-loading>
     </div>
     <template v-else>
       <!-- 登录成功 -->
@@ -45,6 +45,12 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    .app-loading{
+      /deep/ .van-loading__spinner{
+        width: 48px;
+        height: 48px;
+      }
+    }
   }
   .login_fail{
     width: 100%;
