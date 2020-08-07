@@ -7,7 +7,7 @@ module.exports = {
     proxy: {
       '^/api': {
         target: 'http://t.weather.sojson.com',
-        changeOrigin: true,
+        changeOrigin: true
       }
     }
   },
