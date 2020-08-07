@@ -13,16 +13,16 @@
 <script>
 export default {
   name: 'index',
-  data(){
+  data () {
     return {
 
     }
   },
-  mounted(){
-    this.$store.dispatch('getWeatherInfo','101280601').then(rs => {
-      console.log("深圳天气信息",rs)
+  mounted () {
+    this.$store.dispatch('getWeatherInfo', '101280601').then(rs => {
+      console.log('深圳天气信息', rs)
     })
-  },
+  }
 }
 </script>
 
@@ -65,4 +65,3 @@ export default {
     }
   }
 </style>
-

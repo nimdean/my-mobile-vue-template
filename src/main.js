@@ -8,25 +8,25 @@ import { formatTime } from '@/utils/'
 import axios from 'axios'
 import qs from 'qs'
 import '@/assets/style/common.less'
-
-if(process.env.VUE_APP_ENV === 'uat'){
-  let vConsole = require('vconsole')
-  new vConsole()
-}
-
-if(process.env.NODE_ENV === 'development'){ // 区分环境，这样即使打包时忘了把下面代码注释掉也不会影响生产环境
-  // require('./mock/index.js') // 开发环境不需要开启mock时注释
-}
-
 import {
   Loading,
   Dialog,
   Notify,
   Toast,
-  Button,
+  Button
 } from 'vant'
 
 import loadingMask from '@/components/loading'
+
+if (process.env.VUE_APP_ENV === 'uat') {
+  const VConsole = require('vconsole')
+  /* eslint-disable no-new */
+  new VConsole()
+}
+
+if (process.env.NODE_ENV === 'development') { // 区分环境，这样即使打包时忘了把下面代码注释掉也不会影响生产环境
+  // require('./mock/index.js') // 开发环境不需要开启mock时注释
+}
 
 Vue.config.productionTip = false
 Vue.prototype.$dialog = Dialog
@@ -41,43 +41,43 @@ Vue.use(formatTime)
 Vue.use(Toast)
 Vue.use(Button)
 
-if(process.env.NODE_ENV === 'development'){ // 企业微信小应用开发环境添加模拟登录者信息
-  let userInfo = {
-    "orgname":"船務部",
-    "name":"周佩儀",
-    "sessionId": "45679564-f094-444c-b775-6491f13ec3d6",
-    "avatar":"https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0"
+if (process.env.NODE_ENV === 'development') { // 企业微信小应用开发环境添加模拟登录者信息
+  const userInfo = {
+    orgname: '船務部',
+    name: '周佩儀',
+    sessionId: '45679564-f094-444c-b775-6491f13ec3d6',
+    avatar: 'https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0'
   }
-  for(let i in userInfo){
+  for (const i in userInfo) {
     sessionStorage[i] = userInfo[i]
   }
   setTimeout(() => { // 定时器模拟登录时长
     store.commit('setLoginSuccess', true)
-  },1000)
+  }, 1000)
 }
 
 router.beforeEach((to, from, next) => {
   // 动态设置标题
-  if(to.meta.title) document.title = to.meta.title
+  if (to.meta.title) document.title = to.meta.title
   // 企业微信小应用登录
-  let urlSplit = window.location.search.split("?")
-  if(urlSplit.length > 1 && urlSplit[1].indexOf("code=") > -1 && urlSplit[1].indexOf("state=") > -1 && !sessionStorage.sessionId){
-    let queryArr = urlSplit[1].split("#/")[0].split("&")
-    let code = queryArr.find(item => item.indexOf("code=") > -1).split("=")[1]
-    let state = queryArr.find(item => item.indexOf("state=") > -1).split("=")[1]
+  const urlSplit = window.location.search.split('?')
+  if (urlSplit.length > 1 && urlSplit[1].indexOf('code=') > -1 && urlSplit[1].indexOf('state=') > -1 && !sessionStorage.sessionId) {
+    const queryArr = urlSplit[1].split('#/')[0].split('&')
+    const code = queryArr.find(item => item.indexOf('code=') > -1).split('=')[1]
+    const state = queryArr.find(item => item.indexOf('state=') > -1).split('=')[1]
     axios({ // 获取登录信息
       method: 'post',
       url: `${process.env.VUE_APP_BASEURL || ''}/api/entwechat/callback/qywxGetUserIdByCode`,
-      data: qs.stringify({code,state})
+      data: qs.stringify({ code, state })
     }).then(rs => {
-      if(rs.status === 200){
-        if(rs.data.result === 'success'){
+      if (rs.status === 200) {
+        if (rs.data.result === 'success') {
           store.commit('setLoginSuccess', true)
-          for(let i in rs.data.data){
+          for (const i in rs.data.data) {
             sessionStorage[i] = rs.data.data[i]
           }
           next()
-        }else{
+        } else {
           store.commit('setLoginSuccess', false)
           Toast.fail('登录失败: ' + rs.data.data)
         }
@@ -86,7 +86,7 @@ router.beforeEach((to, from, next) => {
       Toast.fail('登录失败！')
       store.commit('setLoginSuccess', false)
     })
-  }else{
+  } else {
     next()
   }
 })

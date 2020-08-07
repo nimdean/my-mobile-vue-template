@@ -22,7 +22,7 @@ export default {
     }
   },
   computed: {
-    tip(){
+    tip () {
       return this.$t ? this.$t('no-data-info') : '没有相关数据哦'
     }
   }

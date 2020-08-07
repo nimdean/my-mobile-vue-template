@@ -12,64 +12,64 @@
 <script>
 import noData from './noData'
 export default {
-  name: "lazy-refresh",
+  name: 'lazy-refresh',
   components: {
     noData
   },
   i18n: {
     messages: {
       'zh-CN': {
-        'loading': '加载中...',
-        'no-more': '没有更多了',
+        loading: '加载中...',
+        'no-more': '没有更多了'
       },
       'zh-HK': {
-        'loading': '加載中...',
-        'no-more': '没有更多了',
+        loading: '加載中...',
+        'no-more': '没有更多了'
       },
       'en-us': {
-        'loading': 'loading...',
-        'no-more': 'No more',
+        loading: 'loading...',
+        'no-more': 'No more'
       }
     }
   },
-  data() {
+  data () {
     return {
       isRefreshing: false,
       scrollTimer: '', // 滚动事件的定时器id
       isNoMoreTimer: '', // 没有更多了的显示控制器id
       isNoMore: false
-    };
+    }
   },
   props: {
     value: Boolean, // 控制加载中的显示
     total: Number, // 需要展示的数据总条数
     current: Number // 当前数据条数
   },
-  created(){
+  created () {
     this.isRefreshing = this.value
   },
   methods: {
-    scroll(e,func,wait){
-      if(e.target.scrollTop + e.target.clientHeight + 5 > this.$refs['board'].clientHeight){
+    scroll (e, func, wait) {
+      if (e.target.scrollTop + e.target.clientHeight + 5 > this.$refs.board.clientHeight) {
         typeof func === 'function' && func(wait)
       }
     },
-    debounce(wait){ // 防抖操作
-      if(!this.scrollTimer && !this.isRefreshing && !this.isNoMore){ // 没有定时器且正在加载状态未消失
-        if(this.total <= this.current){
-          if(!this.isNoMoreTimer){
+    debounce (wait) { // 防抖操作
+      if (!this.scrollTimer && !this.isRefreshing && !this.isNoMore) { // 没有定时器且正在加载状态未消失
+        if (this.total <= this.current) {
+          if (!this.isNoMoreTimer) {
             this.isNoMore = true
-            this.isNoMoreTimer = setTimeout(() => this.isNoMore = false, 1500)
-          }else{
+            this.isNoMoreTimer = setTimeout(() => { this.isNoMore = false }, 1500)
+          } else {
             clearTimeout(this.isNoMoreTimer)
             this.isNoMoreTimer = setTimeout(() => {
               this.isNoMoreTimer = ''
-            },600)
+            }, 600)
           }
-        }else{
+        } else {
           this.$emit('update')
         }
-      }else{
+      } else {
         clearTimeout(this.scrollTimer)
         this.scrollTimer = setTimeout(() => {
           this.scrollTimer = ''
@@ -78,23 +78,23 @@ export default {
     }
   },
   watch: {
-    value(newVal){
-      if(newVal !== this.isRefreshing){
+    value (newVal) {
+      if (newVal !== this.isRefreshing) {
         this.isRefreshing = newVal
       }
     },
-    isRefreshing(newVal){
+    isRefreshing (newVal) {
       this.$emit('input', newVal)
     }
   },
   computed: {
-    tips(){
+    tips () {
       return this.$t ? {
-        'loading': this.$t('loading'),
-        'noMore': this.$t('no-more')
+        loading: this.$t('loading'),
+        noMore: this.$t('no-more')
       } : {
-        'loading': '加载中...',
-        'noMore': '没有更多了'
+        loading: '加载中...',
+        noMore: '没有更多了'
       }
     }
   }

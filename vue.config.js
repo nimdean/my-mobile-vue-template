@@ -2,7 +2,7 @@ const path = require('path')
 module.exports = {
   publicPath: './',
   outputDir: `dist/${process.env.VUE_APP_ENV}`,
-  productionSourceMap: process.env.VUE_APP_ENV === 'prod' ? false : true,
+  productionSourceMap: process.env.VUE_APP_ENV !== 'prod',
   devServer: {
     proxy: {
       '^/api': {
