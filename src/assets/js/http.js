@@ -17,7 +17,7 @@ instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   config.params || (config.params = {})
   if (!config.params.timestamp) { // 如果没有有带时间戳，说明需要遮罩层
-    config.params.timestamp = new Date().getTime()
+    config.params.timestamped = new Date().getTime()
     Loading.show()
   }
   // 请求头里添加sessionId
@@ -34,7 +34,7 @@ instance.interceptors.request.use(function (config) {
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  response.config.params.timestamp && Loading.hide()
+  response.config.params.timestamped && Loading.hide()
   if (response.status === 200) {
     if (response.data.result !== 'success') {
       Toast.fail(response.data.msg || response.data.data)
@@ -45,7 +45,7 @@ instance.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   // 对响应错误做点什么
-  error.config.params.timestamp && Loading.hide()
+  error.config.params.timestamped && Loading.hide()
   Toast.fail(error.message)
   if (error.message === 'Network Error') {
     return error
