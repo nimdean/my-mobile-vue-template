@@ -1,15 +1,23 @@
 <template>
   <div class="lazy-refresh" @scroll="scroll($event, debounce, 500)" ref="box">
     <div class="scroll-board" ref="board">
-      <slot></slot>
+      <slot />
+      <slot name="scope" :list="result.list" />
     </div>
-    <no-data v-show="!total"></no-data>
+    <no-data v-show="!result.total"></no-data>
     <van-loading size="20px" class="loading" color="#2F93EE" v-show="isRefreshing">{{tips.loading}}</van-loading>
     <div class="is-no-more" v-show="isNoMore">{{tips.noMore}}</div>
   </div>
 </template>
 
 <script>
+/**
+ * @FileDescription: 移动端懒加载组件
+ * @Author: chengfengquan
+ * @Date: 2020-11-04
+ * @LastEditors: chengfengquan
+ * @LastEditTime: 2020-11-04
+ */
 import noData from './noData'
 export default {
   name: 'lazy-refresh',
@@ -37,18 +45,52 @@ export default {
       isRefreshing: false,
       scrollTimer: '', // 滚动事件的定时器id
       isNoMoreTimer: '', // 没有更多了的显示控制器id
-      isNoMore: false
+      isNoMore: false,
+      currentPage: 1,
+      result: {
+        list: [],
+        total: 0
+      }
     }
   },
   props: {
-    value: Boolean, // 控制加载中的显示
-    total: Number, // 需要展示的数据总条数
-    current: Number // 当前数据条数
+    xhr: String, // 要发送请求所封装的dispatch函数名
+    params: Object, // 请求参数
+    listString: { // 获取请求返回列表数据的路径
+      type: String,
+      default: 'list'
+    },
+    totalString: { // 获取请求返回总条数的路径
+      type: String,
+      default: 'total'
+    },
+    pageSize: { // 每次请求的条数
+      type: Object,
+      default: () => ({ pageSize: 5 })
+    },
+    currentPageString: {
+      type: String,
+      default: 'currentPage'
+    }
   },
   created () {
-    this.isRefreshing = this.value
+    this.getData()
   },
   methods: {
+    getData () {
+      if (this.currentPage !== 1) { this.isRefreshing = true }
+      this.$store.dispatch(this.xhr, Object.assign({
+        [this.currentPageString]: this.currentPage
+      }, this.params, this.pageSize)).then(rs => {
+        const { result, data } = rs
+        if (result === 'success') {
+          this.result.list = this.result.list.concat(data[this.listString])
+          this.result.total = data[this.totalString]
+        }
+      }).finally(() => {
+        this.isRefreshing = false
+      })
+    },
     scroll (e, func, wait) {
       if (e.target.scrollTop + e.target.clientHeight + 5 > this.$refs.board.clientHeight) {
         typeof func === 'function' && func(wait)
@@ -56,7 +98,7 @@ export default {
     },
     debounce (wait) { // 防抖操作
       if (!this.scrollTimer && !this.isRefreshing && !this.isNoMore) { // 没有定时器且正在加载状态未消失
-        if (this.total <= this.current) {
+        if (this.result.total <= this.result.list.length) {
           if (!this.isNoMoreTimer) {
             this.isNoMore = true
             this.isNoMoreTimer = setTimeout(() => { this.isNoMore = false }, 1500)
@@ -67,7 +109,8 @@ export default {
             }, 600)
           }
         } else {
-          this.$emit('update')
+          this.currentPage++
+          this.getData()
         }
       } else {
         clearTimeout(this.scrollTimer)
@@ -75,16 +118,6 @@ export default {
           this.scrollTimer = ''
         }, wait)
       }
-    }
-  },
-  watch: {
-    value (newVal) {
-      if (newVal !== this.isRefreshing) {
-        this.isRefreshing = newVal
-      }
-    },
-    isRefreshing (newVal) {
-      this.$emit('input', newVal)
     }
   },
   computed: {
@@ -98,7 +131,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

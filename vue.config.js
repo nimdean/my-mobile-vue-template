@@ -5,8 +5,8 @@ module.exports = {
   productionSourceMap: process.env.VUE_APP_ENV !== 'prod',
   devServer: {
     proxy: {
-      '^/api': {
-        target: 'http://t.weather.sojson.com',
+      '*': {
+        target: 'https://b2b.fusen.net.cn',
         changeOrigin: true
       }
     }

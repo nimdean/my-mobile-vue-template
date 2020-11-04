@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import http from '@/assets/js/http'
-
+import qs from 'qs'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -18,16 +18,35 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getWeatherInfo({
-      commit
-    }, cityCode) { // 获取天气信息接口，cityCode为天气城市代码
+    login({},data){ // 登录接口
       return new Promise((resolve, reject) => {
         http({
-          method: 'get',
-          url: `/api/weather/city/${cityCode}`
+          method: 'post',
+          url: '/api/entwechat/callback/qywxGetUserIdByCode',
+          data: qs.stringify(data),
         }).then(rs => {
-          resolve(rs)
-        }).catch(error => reject(error))
+          if(rs.result === 'success') {
+            resolve(rs)
+          }else{
+            reject(rs)
+          }
+        })
+      })
+    },
+    getAll({},data){
+      return new Promise((resolve,reject) => {
+        http({
+          method: 'post',
+          url: `https://b2b.fusen.net.cn/mobile/hr/fileManagement/findAll`,
+          data,
+          params: data.currentPage === 1 ? {} : {timestamp: new Date().getTime()}
+        }).then(rs => {
+          if(rs.result === 'success') {
+            resolve(rs)
+          }else{
+            reject(rs)
+          }
+        })
       })
     }
   },

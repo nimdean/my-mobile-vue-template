@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getOrigin } from '@/utils/'
 import {
   Toast
 } from 'vant'
@@ -6,7 +7,7 @@ import {
 import Loading from './loading'
 
 const options = {
-  baseURL: process.env.NODE_ENV === 'development' ? '' : process.env.VUE_APP_BASEURL,
+  baseURL: getOrigin(),
   timeout: 30000,
   headers: {}
 }

@@ -5,8 +5,6 @@ import store from './store'
 import noData from '@/components/noData'
 import lazyRefresh from '@/components/lazyRefresh'
 import { formatTime } from '@/utils/'
-import axios from 'axios'
-import qs from 'qs'
 import '@/assets/style/common.less'
 import {
   Loading,
@@ -43,9 +41,9 @@ Vue.use(Button)
 
 if (process.env.NODE_ENV === 'development') { // 企业微信小应用开发环境添加模拟登录者信息
   const userInfo = {
-    orgname: '船務部',
-    name: '周佩儀',
-    sessionId: '45679564-f094-444c-b775-6491f13ec3d6',
+    orgname: '信息中心',
+    name: '程峰全',
+    sessionId: '380f1d03-462d-439a-a12f-7eea5b3c4f9c',
     avatar: 'https://wework.qpic.cn/bizmail/cWT5OzHLt9bWnqQOhd3bG8tJRVhklTJaQKxZeticwxib2aILFvkDmkkw/0'
   }
   for (const i in userInfo) {
@@ -65,11 +63,7 @@ router.beforeEach((to, from, next) => {
     const queryArr = urlSplit[1].split('#/')[0].split('&')
     const code = queryArr.find(item => item.indexOf('code=') > -1).split('=')[1]
     const state = queryArr.find(item => item.indexOf('state=') > -1).split('=')[1]
-    axios({ // 获取登录信息
-      method: 'post',
-      url: `${process.env.VUE_APP_BASEURL || ''}/api/entwechat/callback/qywxGetUserIdByCode`,
-      data: qs.stringify({ code, state })
-    }).then(rs => {
+    store.dispatch('login', { code, state }).then(rs => {
       if (rs.status === 200) {
         if (rs.data.result === 'success') {
           store.commit('setLoginSuccess', true)

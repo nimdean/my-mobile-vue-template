@@ -79,3 +79,9 @@ export const deepClone = (data) => { // 简单的深拷贝方法
     return data
   }
 }
+
+export const getOrigin = () => { // 获取当前origin
+  if (process.env.NODE_ENV === 'development') return 'https://test.fusen.net.cn'
+  if (window.location.origin) return window.location.origin
+  return `${window.location.protocol}//${window.location.host}${window.location.port}`
+}

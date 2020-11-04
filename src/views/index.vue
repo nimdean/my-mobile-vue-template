@@ -1,12 +1,14 @@
 <template>
   <div class="index">
-    打开控制台查看<span style="color:red">console</span>的深圳天气信息。
-    <div class="box">
-      <div class="box2"></div>
-      这是1px边框的效果。
-    </div>
-    <div w-188-246></div>
-    <van-button type="primary" size="small">主要按钮</van-button>
+    <lazy-refresh xhr="getAll" :pageSize="{pageSize:5}" :params="{status:1,keyword:'',classId:'',moduleId:'',fileInfoId:''}">
+      <template v-slot:scope="{ list }">
+        <div v-for="item in list" :key="item.id" style="margin-bottom:20px;background: #fff;padding: 15px 10px;">
+          <p>文件名称：{{item.fileName}}</p>
+          <p>流程负责人：{{item.processOwner}}</p>
+          <p>需培训部门：{{item.trainTarget}}</p>
+        </div>
+      </template>
+    </lazy-refresh>
   </div>
 </template>
 
@@ -17,11 +19,6 @@ export default {
     return {
 
     }
-  },
-  mounted () {
-    this.$store.dispatch('getWeatherInfo', '101280601').then(rs => {
-      console.log('深圳天气信息', rs)
-    })
   }
 }
 </script>
@@ -62,6 +59,9 @@ export default {
       height: 120px;
       border-radius: 5px;
       border: 1px solid @theme-color;
+    }
+    .lazy-refresh{
+      height: 600px;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="no-data">
-    <img :src="require('@/assets/images/noData.png')" />
+    <img :src="require('@/assets/images/no_data@2x.png')" />
     <p>{{tip}}</p>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
     padding: 80px 0;
     width: 710px;
     img{
-      width: 100%;
+      width: 60%;
     }
     p{
       color: #999;

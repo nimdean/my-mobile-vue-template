@@ -20,7 +20,7 @@
 export default {
   name: 'app',
   methods: {
-    reload(){
+    reload () {
       location.reload()
     }
   }
